@@ -1,0 +1,23 @@
+# Please rename .env
+#
+# if you have Authorization Servers and use default
+# ISSUER=https://sub.okta.com/oauth2/default
+# if you have Authorization Servers and use custom
+# ISSUER=https://sub.okta.com/oauth2/xxxxx
+# if you not have Authorization Servers
+# ISSUER=https://sub.okta.com
+#
+# CLIENT_ID=
+# CLIENT_SECRET=
+# Your public address
+# APPBASEURL=
+# SCOPE=openid profile email
+# RANDOM_SECRET_WORD=secretsecret
+
+ISSUER=
+CLIENT_ID=
+CLIENT_SECRET=
+APPBASEURL=
+SCOPE=openid profile email
+RANDOM_SECRET_WORD=secretsecret
+
