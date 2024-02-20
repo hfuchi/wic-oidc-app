@@ -1,6 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
+const jwt = require('jsonwebtoken')
+
 
 require('dotenv').config();
 
@@ -30,6 +32,9 @@ app.get('/', (req, res) => {
       <form method="GET" action="/test">
         <button type="submit">debug</button>
       </form>
+      <form method="GET" action="/test2">
+        <button type="submit">id.token</button>
+      </form>
     `);
   } else {
     res.send('Please <a href="/login">login</a>');
@@ -44,9 +49,11 @@ app.get('/test', (req, res) => {
   if (req.userContext) {
     const tokenSet = req.userContext.tokens;
     const userinfo = req.userContext.userinfo;
+    
 
     console.log(`Access Token: ${tokenSet.access_token}`);
     console.log(`Id Token: ${tokenSet.id_token}`);
+    console.log(jwt.decode(tokenSet.id_token, { complete: true }));
     console.log(`Claims: ${tokenSet.claims}`);
     console.log(`Userinfo Response: ${userinfo}`);
 
@@ -55,6 +62,20 @@ app.get('/test', (req, res) => {
     res.send('Hi!');
   }
 });
+
+app.get('/test2', (req, res) => {
+  if (req.userContext) {
+    const tokenSet = req.userContext.tokens;
+    const userinfo = req.userContext.userinfo;
+
+    decoded = jwt.decode(tokenSet.id_token, { complete: true });
+    console.log(decoded);
+    res.send(decoded);
+  } else {
+    res.send('Hi!');
+  }
+});
+
 
 oidc.on('ready', () => {
   app.listen(80, () => console.log('app started'));
